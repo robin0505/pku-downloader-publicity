@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PKU Course Manager - 沉浸式体验</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        'cyber-black': '#0B1120',
+                        'cyber-gray': '#1E293B',
+                        'neon-blue': '#3B82F6',
+                        'neon-purple': '#8B5CF6',
+                        'terminal-bg': '#0F172A',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 2s infinite',
+                    },
+                    keyframes: {
+                        shimmer: {
+                            '0%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(100%)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0B1120;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .text-gradient {
+            background: linear-gradient(to right, #3B82F6, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* 模拟打字机的光标 */
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* 进度条流光 */
+        .progress-shimmer {
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        .code-font { font-family: 'JetBrains Mono', monospace; }
+    </style>
+</head>
+<body class="antialiased selection:bg-neon-blue selection:text-white">
+
+    <!-- 背景氛围 -->
+    <div class="fixed inset-0 pointer-events-none -z-10">
+        <div class="absolute top-0 left-0 w-[800px] h-[800px] bg-neon-blue/5 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-neon-purple/5 rounded-full blur-[100px] translate-x-1/3 translate-y-1/3"></div>
+        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-20"></div>
+    </div>
+
+    <!-- 导航 -->
+    <nav class="fixed w-full z-50 top-0 border-b border-white/5 bg-[#0B1120]/90 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2 font-bold text-xl tracking-wider">
+                <i data-lucide="download-cloud" class="w-6 h-6 text-neon-blue"></i>
+                <span>PKU <span class="text-neon-blue">MANAGER</span></span>
+            </div>
+            <div class="flex items-center gap-6 text-sm font-medium text-slate-400">
+                <a href="#demo-section" class="hover:text-white transition-colors">全流程演示</a>
+                <a href="#features" class="hover:text-white transition-colors">功能详解</a>
+                <a href="https://github.com" target="_blank" class="text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition-all flex items-center gap-2">
+                    <i data-lucide="github" class="w-4 h-4"></i> GitHub
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="pt-32 pb-16 text-center px-6">
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+            教学网同步，<br>
+            <span class="text-gradient">本该如此优雅</span>
+        </h1>
+        <p class="text-lg text-slate-400 max-w-2xl mx-auto mb-10">
+            这不仅是一个下载器。它是基于 Selenium 与 PyWebView 构建的智能管家。<br>
+            全自动登录、增量同步、自动归档，为你节省每一次点击。
+        </p>
+        <button onclick="document.getElementById('demo-section').scrollIntoView()" class="group relative inline-flex items-center gap-2 px-8 py-4 bg-neon-blue hover:bg-blue-600 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/25 overflow-hidden">
+            <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>
+            <i data-lucide="play-circle" class="w-5 h-5"></i>
+            观看运行演示
+        </button>
+    </header>
+
+    <!-- 核心演示区域 (The Live Demo) -->
+    <section id="demo-section" class="py-12 px-4 md:px-6 max-w-6xl mx-auto">
+        <div class="glass-panel rounded-2xl border border-slate-700 overflow-hidden flex flex-col md:flex-row shadow-2xl">
+            
+            <!-- 左侧：剧本控制与解说 -->
+            <div class="w-full md:w-1/3 border-r border-slate-700/50 bg-[#0B1120]/80 p-8 flex flex-col justify-between relative">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                        <i data-lucide="activity" class="w-5 h-5 text-neon-blue"></i>
+                        运行流程
+                    </h3>
+                    <!-- 步骤指示器 -->
+                    <div class="space-y-6 relative">
+                        <div class="absolute left-[15px] top-4 bottom-4 w-0.5 bg-slate-800 -z-10"></div>
+                        
+                        <!-- Step 1 -->
+                        <div id="step-1" class="step-item flex gap-4 opacity-50 transition-opacity duration-300">
+                            <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center text-xs font-mono z-10 step-icon">1</div>
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-200">身份认证</h4>
+                                <p class="text-xs text-slate-500 mt-1">PyWebView 加载本地配置，自动填入通过 AES 加密的凭证。</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div id="step-2" class="step-item flex gap-4 opacity-50 transition-opacity duration-300">
+                            <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center text-xs font-mono z-10 step-icon">2</div>
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-200">获取列表</h4>
+                                <p class="text-xs text-slate-500 mt-1">模拟浏览器行为抓取课程元数据，规避反爬策略。</p>
+                            </div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div id="step-3" class="step-item flex gap-4 opacity-50 transition-opacity duration-300">
+                            <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center text-xs font-mono z-10 step-icon">3</div>
+                            <div>
+                                <h4 class="font-bold text-sm text-slate-200">增量同步</h4>
+                                <p class="text-xs text-slate-500 mt-1">对比文件 Hash 与修改时间，仅下载更新部分。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 控制按钮 -->
+                <div class="mt-8">
+                    <button id="replay-btn" onclick="runSimulation()" class="w-full py-3 border border-slate-700 hover:border-neon-blue/50 hover:bg-slate-800 rounded-lg text-sm font-mono text-slate-400 hover:text-white transition-all flex items-center justify-center gap-2">
+                        <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+                        REPLAY DEMO
+                    </button>
+                </div>
+            </div>
+
+            <!-- 右侧：动态模拟窗口 -->
+            <div class="w-full md:w-2/3 bg-[#0f172a] relative min-h-[500px] flex flex-col">
+                <!-- 窗口标题栏 -->
+                <div class="h-10 bg-[#0B1120] border-b border-slate-800 flex items-center px-4 justify-between">
+                    <div class="flex gap-2">
+                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                    </div>
+                    <div class="text-xs font-mono text-slate-500">PKU Course Manager v1.2.0</div>
+                    <div class="w-10"></div>
+                </div>
+
+                <!-- 视图容器 -->
+                <div id="app-view" class="flex-1 relative overflow-hidden p-6">
+                    <!-- 场景1: 登录界面 (默认隐藏) -->
+                    <div id="view-login" class="absolute inset-0 flex flex-col items-center justify-center p-8 bg-[#0f172a] transition-opacity duration-500 opacity-0 z-10">
+                        <div class="w-full max-w-sm space-y-6">
+                            <div class="text-center mb-8">
+                                <div class="inline-block p-4 rounded-full bg-neon-blue/10 mb-4">
+                                    <i data-lucide="lock" class="w-8 h-8 text-neon-blue"></i>
+                                </div>
+                                <h2 class="text-2xl font-bold">INITIAL SETUP</h2>
+                            </div>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-xs text-slate-500 font-bold uppercase">Student ID</label>
+                                    <div class="h-10 bg-slate-900 border border-slate-700 rounded flex items-center px-3 text-sm font-mono text-white">
+                                        <span id="type-user"></span><span class="cursor-blink">|</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-xs text-slate-500 font-bold uppercase">Password</label>
+                                    <div class="h-10 bg-slate-900 border border-slate-700 rounded flex items-center px-3 text-sm font-mono text-white">
+                                        <span id="type-pass"></span>
+                                    </div>
+                                </div>
+                                <button id="btn-login" class="w-full h-12 bg-slate-700 text-slate-400 font-bold rounded flex items-center justify-center gap-2 transition-colors">
+                                    CONNECT TO PORTAL
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 场景2: Dashboard (主界面) -->
+                    <div id="view-dashboard" class="absolute inset-0 p-6 transition-opacity duration-500 opacity-0 bg-[#0f172a]">
+                        <div class="flex justify-between items-center mb-8">
+                            <div>
+                                <h2 class="text-2xl font-bold">My Courses</h2>
+                                <p class="text-xs text-slate-500">Last sync: <span id="last-sync-time">Just now</span></p>
+                            </div>
+                            <button id="btn-sync" class="px-6 py-2 bg-neon-blue text-white rounded-lg font-bold shadow-lg shadow-blue-500/20 flex items-center gap-2 transform transition-transform active:scale-95">
+                                <i data-lucide="refresh-cw" class="w-4 h-4" id="sync-icon"></i>
+                                <span id="sync-text">SYNC NOW</span>
+                            </button>
+                        </div>
+                        
+                        <!-- 课程卡片网格 -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <!-- Card 1 -->
+                            <div class="bg-slate-800/50 border border-slate-700 p-4 rounded-xl backdrop-blur hover:border-neon-blue/30 transition-colors">
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-[10px] bg-neon-blue/10 text-neon-blue px-2 py-0.5 rounded font-mono">MATH</span>
+                                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                </div>
+                                <h3 class="font-bold text-sm">高等数学 (A)</h3>
+                                <div class="mt-4 h-1 w-full bg-slate-700 rounded-full overflow-hidden opacity-0 transition-opacity" id="prog-1-wrap">
+                                    <div id="prog-1" class="h-full bg-neon-blue w-0 transition-all duration-300"></div>
+                                </div>
+                            </div>
+                            <!-- Card 2 -->
+                            <div class="bg-slate-800/50 border border-slate-700 p-4 rounded-xl backdrop-blur hover:border-neon-blue/30 transition-colors">
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-[10px] bg-neon-purple/10 text-neon-purple px-2 py-0.5 rounded font-mono">CS</span>
+                                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                                </div>
+                                <h3 class="font-bold text-sm">计算机系统导论</h3>
+                                <div class="mt-4 h-1 w-full bg-slate-700 rounded-full overflow-hidden opacity-0 transition-opacity" id="prog-2-wrap">
+                                    <div id="prog-2" class="h-full bg-neon-purple w-0 transition-all duration-300"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 场景元素: 底部进度条 (App.jsx 复刻) -->
+                    <div id="bottom-panel" class="absolute bottom-0 left-0 right-0 bg-[#0B1120]/95 border-t border-slate-700 transition-transform duration-500 translate-y-full z-20">
+                        <div class="h-1 bg-gradient-to-r from-neon-blue via-neon-purple to-neon-blue"></div>
+                        <div class="p-4">
+                            <div class="flex justify-between items-center mb-2">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center animate-pulse">
+                                        <i data-lucide="download" class="w-4 h-4 text-white"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-xs font-bold text-white" id="panel-title">Initializing...</div>
+                                        <div class="text-[10px] text-slate-400" id="panel-subtitle">Preparing download queue</div>
+                                    </div>
+                                </div>
+                                <div class="flex gap-2 text-[10px] font-mono">
+                                    <span class="text-green-400 flex items-center gap-1"><i data-lucide="check" class="w-3 h-3"></i> <span id="stat-dl">0</span></span>
+                                    <span class="text-slate-500 flex items-center gap-1"><i data-lucide="skip-forward" class="w-3 h-3"></i> <span id="stat-skip">0</span></span>
+                                </div>
+                            </div>
+                            <div class="h-2 bg-slate-800 rounded-full overflow-hidden relative">
+                                <div id="main-progress" class="h-full bg-gradient-to-r from-neon-blue to-neon-purple w-0 transition-all duration-100">
+                                    <div class="progress-shimmer"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 场景元素: 终端日志 (Terminal) -->
+                    <div id="terminal" class="absolute top-6 right-6 w-64 h-48 bg-black/80 border border-slate-800 rounded-lg p-3 font-mono text-[10px] text-slate-400 overflow-hidden flex flex-col opacity-0 transition-opacity duration-500 pointer-events-none z-10">
+                        <div class="border-b border-slate-800 pb-1 mb-2 text-slate-600 font-bold flex justify-between">
+                            <span>GUI_LOGGER</span>
+                            <span>PYTHON</span>
+                        </div>
+                        <div id="log-content" class="flex-1 overflow-hidden flex flex-col justify-end space-y-1">
+                            <!-- logs go here -->
+                        </div>
+                    </div>
+
+                    <!-- 场景3: 成功弹窗 -->
+                    <div id="modal-success" class="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-500">
+                        <div class="bg-slate-800 border border-slate-600 rounded-xl p-6 max-w-xs w-full shadow-2xl transform scale-90 transition-transform duration-300" id="modal-card">
+                            <div class="flex justify-between items-start mb-4">
+                                <h3 class="text-lg font-bold text-white">Sync Report</h3>
+                                <button class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 mb-4 text-center">
+                                <div class="bg-slate-700/50 rounded p-2">
+                                    <div class="text-lg font-bold text-green-400">5</div>
+                                    <div class="text-[10px] text-slate-500">New</div>
+                                </div>
+                                <div class="bg-slate-700/50 rounded p-2">
+                                    <div class="text-lg font-bold text-slate-400">12</div>
+                                    <div class="text-[10px] text-slate-500">Skipped</div>
+                                </div>
+                                <div class="bg-slate-700/50 rounded p-2">
+                                    <div class="text-lg font-bold text-red-400">0</div>
+                                    <div class="text-[10px] text-slate-500">Failed</div>
+                                </div>
+                            </div>
+                            <button onclick="resetDemo()" class="w-full py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs rounded transition-colors">Close</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 功能详情网格 -->
+    <section id="features" class="py-24 max-w-7xl mx-auto px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            
+            <!-- Feature: 核心技术 -->
+            <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:bg-slate-800/50 transition-colors group">
+                <div class="w-12 h-12 rounded-lg bg-neon-blue/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="cpu" class="w-6 h-6 text-neon-blue"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-white">PyWebView 驱动</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    告别基于 Electron 的臃肿体积。后端 Python 核心逻辑 + 前端 React 高性能 UI，轻量且强大。支持 <code class="bg-slate-800 px-1 rounded text-neon-blue">headless</code> 无头模式静默运行。
+                </p>
+            </div>
+
+            <!-- Feature: 智能筛选 -->
+            <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:bg-slate-800/50 transition-colors group">
+                <div class="w-12 h-12 rounded-lg bg-neon-purple/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="filter" class="w-6 h-6 text-neon-purple"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-white">课程别名 & 筛选</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    "高等数学(B) (001234)" 名字太长？设置别名自动重命名本地文件夹。支持精确到 Tab（如只下载“课件”不下载“作业”）的筛选控制。
+                </p>
+            </div>
+
+            <!-- Feature: 安全机制 -->
+            <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:bg-slate-800/50 transition-colors group">
+                <div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="shield-check" class="w-6 h-6 text-green-400"></i>
+                </div>
+                <h3 class="text-xl font-bold mb-3 text-white">隐私优先设计</h3>
+                <p class="text-slate-400 text-sm leading-relaxed">
+                    你的账号密码仅保存在本地 <code class="bg-slate-800 px-1 rounded">config.ini</code> 中，绝不上传云端。代码完全开源，逻辑透明可查。
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-[#050914] py-12 text-center">
+        <p class="text-slate-500 text-sm">
+            &copy; 2024 PKU Course Manager. Open Source under MIT License.<br>
+            此项目非北京大学官方应用，仅供学习交流使用。
+        </p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // 演示逻辑状态机
+        let isRunning = false;
+        const elements = {
+            views: {
+                login: document.getElementById('view-login'),
+                dashboard: document.getElementById('view-dashboard'),
+            },
+            steps: [
+                document.getElementById('step-1'),
+                document.getElementById('step-2'),
+                document.getElementById('step-3')
+            ],
+            inputs: {
+                user: document.getElementById('type-user'),
+                pass: document.getElementById('type-pass')
+            },
+            btn: {
+                login: document.getElementById('btn-login'),
+                sync: document.getElementById('btn-sync'),
+                syncIcon: document.getElementById('sync-icon'),
+                syncText: document.getElementById('sync-text')
+            },
+            panel: document.getElementById('bottom-panel'),
+            progressBar: document.getElementById('main-progress'),
+            terminal: document.getElementById('terminal'),
+            logs: document.getElementById('log-content'),
+            modal: document.getElementById('modal-success'),
+            modalCard: document.getElementById('modal-card'),
+            panelTitle: document.getElementById('panel-title'),
+            panelSub: document.getElementById('panel-subtitle'),
+            stats: {
+                dl: document.getElementById('stat-dl'),
+                skip: document.getElementById('stat-skip')
+            }
+        };
+
+        async function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+        function setActiveStep(index) {
+            elements.steps.forEach((el, i) => {
+                if (i === index - 1) {
+                    el.style.opacity = '1';
+                    el.querySelector('.step-icon').classList.remove('bg-slate-800', 'border-slate-600');
+                    el.querySelector('.step-icon').classList.add('bg-neon-blue', 'border-neon-blue', 'shadow-lg', 'shadow-neon-blue/50');
+                } else {
+                    el.style.opacity = '0.5';
+                    el.querySelector('.step-icon').classList.add('bg-slate-800', 'border-slate-600');
+                    el.querySelector('.step-icon').classList.remove('bg-neon-blue', 'border-neon-blue', 'shadow-lg', 'shadow-neon-blue/50');
+                }
+            });
+        }
+
+        function addLog(msg, color='text-slate-400') {
+            const div = document.createElement('div');
+            div.className = `${color} truncate`;
+            div.innerText = `> ${msg}`;
+            elements.logs.appendChild(div);
+            if (elements.logs.children.length > 8) elements.logs.firstChild.remove();
+        }
+
+        async function typeText(element, text) {
+            element.innerText = '';
+            for (let char of text) {
+                element.innerText += char;
+                await wait(50 + Math.random() * 50);
+            }
+        }
+
+        async function runSimulation() {
+            if (isRunning) return;
+            isRunning = true;
+            resetUI();
+            
+            // --- Phase 1: Login ---
+            setActiveStep(1);
+            elements.views.login.style.opacity = '1';
+            elements.views.login.style.pointerEvents = 'auto';
+            
+            await wait(800);
+            await typeText(elements.inputs.user, '1800012345');
+            await wait(300);
+            await typeText(elements.inputs.pass, '••••••••');
+            await wait(500);
+
+            elements.btn.login.classList.add('bg-neon-blue', 'text-white');
+            elements.btn.login.innerText = 'AUTHENTICATING...';
+            
+            await wait(1500); // 模拟登录耗时
+
+            // --- Phase 2: Transition to Dashboard ---
+            elements.views.login.style.opacity = '0';
+            elements.views.login.style.pointerEvents = 'none';
+            
+            await wait(500);
+            setActiveStep(2);
+            elements.views.dashboard.style.opacity = '1';
+            
+            // 模拟获取课程列表
+            elements.btn.sync.disabled = true;
+            elements.btn.sync.classList.add('opacity-50');
+            await wait(1000); // 模拟 Fetch metadata
+            elements.btn.sync.disabled = false;
+            elements.btn.sync.classList.remove('opacity-50');
+
+            // --- Phase 3: Sync Process ---
+            await wait(800);
+            // 模拟点击 Sync
+            elements.btn.sync.classList.add('scale-95');
+            setTimeout(() => elements.btn.sync.classList.remove('scale-95'), 150);
+            
+            elements.btn.sync.querySelector('span').innerText = 'SYNCING...';
+            elements.btn.sync.querySelector('svg').classList.add('animate-spin');
+            
+            setActiveStep(3);
+            
+            // 打开底部面板和终端
+            elements.panel.style.transform = 'translateY(0)';
+            elements.terminal.style.opacity = '1';
+            addLog('Initializing Downloader...', 'text-slate-300');
+            await wait(500);
+            addLog('Loading config from gui.py');
+            addLog('Driver: Chrome Headless', 'text-green-400');
+
+            // 模拟进度
+            const courses = [
+                { name: '高等数学 (A)', file: 'lecture_03.pdf', size: '5.2MB' },
+                { name: '计算机系统导论', file: 'lab_manual.docx', size: '1.1MB' },
+                { name: '大学物理', file: 'homework_solution.pdf', size: '0.5MB' }
+            ];
+
+            let totalProgress = 0;
+            let dlCount = 0;
+            let skipCount = 0;
+
+            for (let i = 0; i < 100; i+=2) {
+                totalProgress = i;
+                elements.progressBar.style.width = `${totalProgress}%`;
+                
+                // 随机更新状态
+                if (i % 15 === 0) {
+                    const course = courses[Math.floor(Math.random() * courses.length)];
+                    elements.panelTitle.innerText = `Syncing: ${course.name}`;
+                    elements.panelSub.innerText = `Downloading ${course.file} (${course.size})`;
+                    addLog(`[${course.name}] Fetching ${course.file}...`);
+                    
+                    // 显示课程卡片上的进度条
+                    if (course.name.includes('数学')) {
+                        document.getElementById('prog-1-wrap').style.opacity = '1';
+                        document.getElementById('prog-1').style.width = `${Math.random() * 100}%`;
+                    }
+                }
+
+                if (i % 25 === 0) {
+                    dlCount++;
+                    elements.stats.dl.innerText = dlCount;
+                    addLog(`Saved to ./Downloads/${dlCount}.pdf`, 'text-neon-blue');
+                }
+                if (i % 35 === 0) {
+                    skipCount++;
+                    elements.stats.skip.innerText = skipCount;
+                    addLog(`File exists, skipped.`, 'text-slate-500');
+                }
+
+                await wait(80);
+            }
+
+            elements.progressBar.style.width = '100%';
+            addLog('All tasks finished.', 'text-green-400');
+            elements.btn.sync.querySelector('span').innerText = 'SYNC NOW';
+            elements.btn.sync.querySelector('svg').classList.remove('animate-spin');
+            elements.panelTitle.innerText = 'Complete';
+            elements.panelSub.innerText = 'Sync finished successfully';
+
+            await wait(1000);
+
+            // --- Phase 4: Success Report ---
+            elements.modal.style.opacity = '1';
+            elements.modal.style.pointerEvents = 'auto';
+            elements.modalCard.style.transform = 'scale(1)';
+
+            isRunning = false;
+        }
+
+        function resetUI() {
+            elements.inputs.user.innerText = '';
+            elements.inputs.pass.innerText = '';
+            elements.btn.login.innerText = 'CONNECT TO PORTAL';
+            elements.btn.login.classList.remove('bg-neon-blue', 'text-white');
+            elements.views.dashboard.style.opacity = '0';
+            elements.panel.style.transform = 'translateY(100%)';
+            elements.terminal.style.opacity = '0';
+            elements.logs.innerHTML = '';
+            elements.modal.style.opacity = '0';
+            elements.modal.style.pointerEvents = 'none';
+            elements.modalCard.style.transform = 'scale(0.9)';
+            elements.stats.dl.innerText = '0';
+            elements.stats.skip.innerText = '0';
+            document.getElementById('prog-1-wrap').style.opacity = '0';
+            document.getElementById('prog-1').style.width = '0';
+        }
+
+        function resetDemo() {
+            resetUI();
+            elements.views.login.style.opacity = '1'; // Back to start state visualization
+            setActiveStep(0); // Reset steps
+        }
+
+        // Auto start once
+        setTimeout(() => {
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting && !isRunning) {
+                    runSimulation();
+                }
+            }, { threshold: 0.5 });
+            observer.observe(document.getElementById('demo-section'));
+        }, 1000);
+
+    </script>
+</body>
+</html>

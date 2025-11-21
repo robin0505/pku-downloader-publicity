@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PKU Course Manager - 沉浸式体验</title>
+    <title>PKU Course Manager - 北大课程资料同步助手</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -47,7 +47,7 @@
         }
 
         .glass-panel {
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
@@ -72,165 +72,162 @@
             background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
             animation: shimmer 2s infinite;
         }
-
-        .code-font { font-family: 'JetBrains Mono', monospace; }
     </style>
 </head>
 <body class="antialiased selection:bg-neon-blue selection:text-white">
 
     <!-- 背景氛围 -->
     <div class="fixed inset-0 pointer-events-none -z-10">
-        <div class="absolute top-0 left-0 w-[800px] h-[800px] bg-neon-blue/5 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
-        <div class="absolute bottom-0 right-0 w-[600px] h-[600px] bg-neon-purple/5 rounded-full blur-[100px] translate-x-1/3 translate-y-1/3"></div>
-        <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMSIgY3k9IjEiIHI9IjEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wNSkiLz48L3N2Zz4=')] opacity-20"></div>
+        <div class="absolute top-0 left-0 w-[80%] h-[80%] bg-neon-blue/5 rounded-full blur-[80px] md:blur-[120px] -translate-x-1/2 -translate-y-1/2"></div>
+        <div class="absolute bottom-0 right-0 w-[80%] h-[80%] bg-neon-purple/5 rounded-full blur-[80px] md:blur-[100px] translate-x-1/3 translate-y-1/3"></div>
     </div>
 
     <!-- 导航 -->
     <nav class="fixed w-full z-50 top-0 border-b border-white/5 bg-[#0B1120]/90 backdrop-blur-md">
-        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-2 font-bold text-xl tracking-wider">
-                <i data-lucide="download-cloud" class="w-6 h-6 text-neon-blue"></i>
+        <div class="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2 font-bold text-lg md:text-xl tracking-wider">
+                <i data-lucide="download-cloud" class="w-5 h-5 md:w-6 md:h-6 text-neon-blue"></i>
                 <span>PKU <span class="text-neon-blue">MANAGER</span></span>
             </div>
-            <div class="flex items-center gap-6 text-sm font-medium text-slate-400">
-                <a href="#demo-section" class="hover:text-white transition-colors">全流程演示</a>
+            <div class="flex items-center gap-4 md:gap-6 text-xs md:text-sm font-medium text-slate-400">
+                <a href="#demo-section" class="hover:text-white transition-colors hidden md:block">功能演示</a>
                 <a href="#features" class="hover:text-white transition-colors">功能详解</a>
-                <a href="https://github.com" target="_blank" class="text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition-all flex items-center gap-2">
-                    <i data-lucide="github" class="w-4 h-4"></i> GitHub
+                <a href="https://github.com" target="_blank" class="text-white bg-white/10 hover:bg-white/20 px-3 py-1.5 md:px-4 md:py-2 rounded-full transition-all flex items-center gap-2">
+                    <i data-lucide="github" class="w-3 h-3 md:w-4 md:h-4"></i> <span class="hidden md:inline">GitHub</span>
                 </a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="pt-32 pb-16 text-center px-6">
-        <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-            教学网同步，<br>
-            <span class="text-gradient">本该如此优雅</span>
+    <header class="pt-28 pb-12 md:pt-32 md:pb-16 text-center px-4 md:px-6">
+        <h1 class="text-4xl md:text-7xl font-bold mb-6 tracking-tight leading-tight">
+            课程同步，<br>
+            <span class="text-gradient">本该如此简单</span>
         </h1>
-        <p class="text-lg text-slate-400 max-w-2xl mx-auto mb-10">
-            这不仅是一个下载器。它是基于 Selenium 与 PyWebView 构建的智能管家。<br>
-            全自动登录、增量同步、自动归档，为你节省每一次点击。
+        <p class="text-base md:text-lg text-slate-400 max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed">
+            专为北大同学打造的课程资料管家。<br class="hidden md:block">
+            自动登录、智能检测更新、自动归档整理，为你节省每一次点击。
         </p>
-        <button onclick="document.getElementById('demo-section').scrollIntoView()" class="group relative inline-flex items-center gap-2 px-8 py-4 bg-neon-blue hover:bg-blue-600 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/25 overflow-hidden">
+        <button onclick="document.getElementById('demo-section').scrollIntoView()" class="group relative inline-flex items-center gap-2 px-6 py-3 md:px-8 md:py-4 bg-neon-blue hover:bg-blue-600 text-white rounded-xl font-bold transition-all shadow-lg shadow-blue-500/25 overflow-hidden text-sm md:text-base">
             <div class="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500"></div>
-            <i data-lucide="play-circle" class="w-5 h-5"></i>
+            <i data-lucide="play-circle" class="w-4 h-4 md:w-5 md:h-5"></i>
             观看运行演示
         </button>
     </header>
 
     <!-- 核心演示区域 (The Live Demo) -->
-    <section id="demo-section" class="py-12 px-4 md:px-6 max-w-6xl mx-auto">
+    <section id="demo-section" class="py-8 md:py-12 px-4 max-w-6xl mx-auto">
         <div class="glass-panel rounded-2xl border border-slate-700 overflow-hidden flex flex-col md:flex-row shadow-2xl">
             
-            <!-- 左侧：剧本控制与解说 -->
-            <div class="w-full md:w-1/3 border-r border-slate-700/50 bg-[#0B1120]/80 p-8 flex flex-col justify-between relative">
+            <!-- 左侧：流程说明 -->
+            <div class="w-full md:w-1/3 border-b md:border-b-0 md:border-r border-slate-700/50 bg-[#0B1120]/80 p-6 md:p-8 flex flex-col justify-between relative">
                 <div>
-                    <h3 class="text-xl font-bold text-white mb-6 flex items-center gap-2">
+                    <h3 class="text-lg md:text-xl font-bold text-white mb-6 flex items-center gap-2">
                         <i data-lucide="activity" class="w-5 h-5 text-neon-blue"></i>
-                        运行流程
+                        它是如何工作的？
                     </h3>
                     <!-- 步骤指示器 -->
-                    <div class="space-y-6 relative">
-                        <div class="absolute left-[15px] top-4 bottom-4 w-0.5 bg-slate-800 -z-10"></div>
+                    <div class="space-y-6 relative pl-2">
+                        <div class="absolute left-[23px] top-4 bottom-4 w-0.5 bg-slate-800 -z-10"></div>
                         
                         <!-- Step 1 -->
                         <div id="step-1" class="step-item flex gap-4 opacity-50 transition-opacity duration-300">
-                            <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center text-xs font-mono z-10 step-icon">1</div>
+                            <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center text-xs font-mono z-10 step-icon flex-shrink-0">1</div>
                             <div>
-                                <h4 class="font-bold text-sm text-slate-200">身份认证</h4>
-                                <p class="text-xs text-slate-500 mt-1">PyWebView 加载本地配置，自动填入通过 AES 加密的凭证。</p>
+                                <h4 class="font-bold text-sm text-slate-200">自动登录</h4>
+                                <p class="text-xs text-slate-500 mt-1">读取你保存的配置，自动帮你完成身份认证，不用每次都输密码。</p>
                             </div>
                         </div>
 
                         <!-- Step 2 -->
                         <div id="step-2" class="step-item flex gap-4 opacity-50 transition-opacity duration-300">
-                            <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center text-xs font-mono z-10 step-icon">2</div>
+                            <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center text-xs font-mono z-10 step-icon flex-shrink-0">2</div>
                             <div>
                                 <h4 class="font-bold text-sm text-slate-200">获取列表</h4>
-                                <p class="text-xs text-slate-500 mt-1">模拟浏览器行为抓取课程元数据，规避反爬策略。</p>
+                                <p class="text-xs text-slate-500 mt-1">智能识别本学期所有课程，清晰罗列在界面上。</p>
                             </div>
                         </div>
 
                         <!-- Step 3 -->
                         <div id="step-3" class="step-item flex gap-4 opacity-50 transition-opacity duration-300">
-                            <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center text-xs font-mono z-10 step-icon">3</div>
+                            <div class="w-8 h-8 rounded-full bg-slate-800 border border-slate-600 flex items-center justify-center text-xs font-mono z-10 step-icon flex-shrink-0">3</div>
                             <div>
-                                <h4 class="font-bold text-sm text-slate-200">增量同步</h4>
-                                <p class="text-xs text-slate-500 mt-1">对比文件 Hash 与修改时间，仅下载更新部分。</p>
+                                <h4 class="font-bold text-sm text-slate-200">智能同步</h4>
+                                <p class="text-xs text-slate-500 mt-1">自动对比本地文件，只下载老师新上传的课件，绝不重复下载。</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 控制按钮 -->
-                <div class="mt-8">
+                <div class="mt-8 hidden md:block">
                     <button id="replay-btn" onclick="runSimulation()" class="w-full py-3 border border-slate-700 hover:border-neon-blue/50 hover:bg-slate-800 rounded-lg text-sm font-mono text-slate-400 hover:text-white transition-all flex items-center justify-center gap-2">
                         <i data-lucide="rotate-cw" class="w-4 h-4"></i>
-                        REPLAY DEMO
+                        重新演示
                     </button>
                 </div>
             </div>
 
             <!-- 右侧：动态模拟窗口 -->
-            <div class="w-full md:w-2/3 bg-[#0f172a] relative min-h-[500px] flex flex-col">
+            <div class="w-full md:w-2/3 bg-[#0f172a] relative h-[400px] md:h-[500px] flex flex-col">
                 <!-- 窗口标题栏 -->
-                <div class="h-10 bg-[#0B1120] border-b border-slate-800 flex items-center px-4 justify-between">
+                <div class="h-10 bg-[#0B1120] border-b border-slate-800 flex items-center px-4 justify-between shrink-0">
                     <div class="flex gap-2">
-                        <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
-                        <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                        <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                        <div class="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-red-500/80"></div>
+                        <div class="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-yellow-500/80"></div>
+                        <div class="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-500/80"></div>
                     </div>
-                    <div class="text-xs font-mono text-slate-500">PKU Course Manager v1.2.0</div>
+                    <div class="text-xs font-mono text-slate-500">PKU Course Manager</div>
                     <div class="w-10"></div>
                 </div>
 
                 <!-- 视图容器 -->
-                <div id="app-view" class="flex-1 relative overflow-hidden p-6">
-                    <!-- 场景1: 登录界面 (默认隐藏) -->
-                    <div id="view-login" class="absolute inset-0 flex flex-col items-center justify-center p-8 bg-[#0f172a] transition-opacity duration-500 opacity-0 z-10">
+                <div id="app-view" class="flex-1 relative overflow-hidden p-4 md:p-6">
+                    <!-- 场景1: 登录界面 -->
+                    <div id="view-login" class="absolute inset-0 flex flex-col items-center justify-center p-6 bg-[#0f172a] transition-opacity duration-500 opacity-0 z-10">
                         <div class="w-full max-w-sm space-y-6">
-                            <div class="text-center mb-8">
-                                <div class="inline-block p-4 rounded-full bg-neon-blue/10 mb-4">
-                                    <i data-lucide="lock" class="w-8 h-8 text-neon-blue"></i>
+                            <div class="text-center mb-6 md:mb-8">
+                                <div class="inline-block p-3 md:p-4 rounded-full bg-neon-blue/10 mb-4">
+                                    <i data-lucide="lock" class="w-6 h-6 md:w-8 md:h-8 text-neon-blue"></i>
                                 </div>
-                                <h2 class="text-2xl font-bold">INITIAL SETUP</h2>
+                                <h2 class="text-xl md:text-2xl font-bold">初始化设置</h2>
                             </div>
                             <div class="space-y-4">
                                 <div>
-                                    <label class="text-xs text-slate-500 font-bold uppercase">Student ID</label>
+                                    <label class="text-xs text-slate-500 font-bold uppercase">学号</label>
                                     <div class="h-10 bg-slate-900 border border-slate-700 rounded flex items-center px-3 text-sm font-mono text-white">
                                         <span id="type-user"></span><span class="cursor-blink">|</span>
                                     </div>
                                 </div>
                                 <div>
-                                    <label class="text-xs text-slate-500 font-bold uppercase">Password</label>
+                                    <label class="text-xs text-slate-500 font-bold uppercase">密码</label>
                                     <div class="h-10 bg-slate-900 border border-slate-700 rounded flex items-center px-3 text-sm font-mono text-white">
                                         <span id="type-pass"></span>
                                     </div>
                                 </div>
-                                <button id="btn-login" class="w-full h-12 bg-slate-700 text-slate-400 font-bold rounded flex items-center justify-center gap-2 transition-colors">
-                                    CONNECT TO PORTAL
+                                <button id="btn-login" class="w-full h-12 bg-slate-700 text-slate-400 font-bold rounded flex items-center justify-center gap-2 transition-colors text-sm">
+                                    连接教学网
                                 </button>
                             </div>
                         </div>
                     </div>
 
                     <!-- 场景2: Dashboard (主界面) -->
-                    <div id="view-dashboard" class="absolute inset-0 p-6 transition-opacity duration-500 opacity-0 bg-[#0f172a]">
-                        <div class="flex justify-between items-center mb-8">
+                    <div id="view-dashboard" class="absolute inset-0 p-4 md:p-6 transition-opacity duration-500 opacity-0 bg-[#0f172a]">
+                        <div class="flex justify-between items-center mb-6">
                             <div>
-                                <h2 class="text-2xl font-bold">My Courses</h2>
-                                <p class="text-xs text-slate-500">Last sync: <span id="last-sync-time">Just now</span></p>
+                                <h2 class="text-xl md:text-2xl font-bold">我的课程</h2>
+                                <p class="text-xs text-slate-500">上次同步: <span id="last-sync-time">刚刚</span></p>
                             </div>
-                            <button id="btn-sync" class="px-6 py-2 bg-neon-blue text-white rounded-lg font-bold shadow-lg shadow-blue-500/20 flex items-center gap-2 transform transition-transform active:scale-95">
+                            <button id="btn-sync" class="px-4 py-2 md:px-6 md:py-2 bg-neon-blue text-white rounded-lg font-bold shadow-lg shadow-blue-500/20 flex items-center gap-2 transform transition-transform active:scale-95 text-sm">
                                 <i data-lucide="refresh-cw" class="w-4 h-4" id="sync-icon"></i>
-                                <span id="sync-text">SYNC NOW</span>
+                                <span id="sync-text">开始同步</span>
                             </button>
                         </div>
                         
                         <!-- 课程卡片网格 -->
-                        <div class="grid grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                             <!-- Card 1 -->
                             <div class="bg-slate-800/50 border border-slate-700 p-4 rounded-xl backdrop-blur hover:border-neon-blue/30 transition-colors">
                                 <div class="flex justify-between mb-2">
@@ -256,7 +253,7 @@
                         </div>
                     </div>
 
-                    <!-- 场景元素: 底部进度条 (App.jsx 复刻) -->
+                    <!-- 场景元素: 底部进度条 -->
                     <div id="bottom-panel" class="absolute bottom-0 left-0 right-0 bg-[#0B1120]/95 border-t border-slate-700 transition-transform duration-500 translate-y-full z-20">
                         <div class="h-1 bg-gradient-to-r from-neon-blue via-neon-purple to-neon-blue"></div>
                         <div class="p-4">
@@ -265,12 +262,12 @@
                                     <div class="w-8 h-8 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center animate-pulse">
                                         <i data-lucide="download" class="w-4 h-4 text-white"></i>
                                     </div>
-                                    <div>
-                                        <div class="text-xs font-bold text-white" id="panel-title">Initializing...</div>
-                                        <div class="text-[10px] text-slate-400" id="panel-subtitle">Preparing download queue</div>
+                                    <div class="min-w-0">
+                                        <div class="text-xs font-bold text-white truncate" id="panel-title">准备中...</div>
+                                        <div class="text-[10px] text-slate-400 truncate" id="panel-subtitle">正在分析下载队列</div>
                                     </div>
                                 </div>
-                                <div class="flex gap-2 text-[10px] font-mono">
+                                <div class="flex gap-2 text-[10px] font-mono shrink-0 ml-2">
                                     <span class="text-green-400 flex items-center gap-1"><i data-lucide="check" class="w-3 h-3"></i> <span id="stat-dl">0</span></span>
                                     <span class="text-slate-500 flex items-center gap-1"><i data-lucide="skip-forward" class="w-3 h-3"></i> <span id="stat-skip">0</span></span>
                                 </div>
@@ -283,11 +280,10 @@
                         </div>
                     </div>
 
-                    <!-- 场景元素: 终端日志 (Terminal) -->
-                    <div id="terminal" class="absolute top-6 right-6 w-64 h-48 bg-black/80 border border-slate-800 rounded-lg p-3 font-mono text-[10px] text-slate-400 overflow-hidden flex flex-col opacity-0 transition-opacity duration-500 pointer-events-none z-10">
+                    <!-- 场景元素: 终端日志 (手机端隐藏) -->
+                    <div id="terminal" class="hidden md:flex absolute top-6 right-6 w-56 h-40 bg-black/80 border border-slate-800 rounded-lg p-3 font-mono text-[10px] text-slate-400 overflow-hidden flex-col opacity-0 transition-opacity duration-500 pointer-events-none z-10">
                         <div class="border-b border-slate-800 pb-1 mb-2 text-slate-600 font-bold flex justify-between">
-                            <span>GUI_LOGGER</span>
-                            <span>PYTHON</span>
+                            <span>SYSTEM LOG</span>
                         </div>
                         <div id="log-content" class="flex-1 overflow-hidden flex flex-col justify-end space-y-1">
                             <!-- logs go here -->
@@ -296,68 +292,76 @@
 
                     <!-- 场景3: 成功弹窗 -->
                     <div id="modal-success" class="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 pointer-events-none transition-opacity duration-500">
-                        <div class="bg-slate-800 border border-slate-600 rounded-xl p-6 max-w-xs w-full shadow-2xl transform scale-90 transition-transform duration-300" id="modal-card">
+                        <div class="bg-slate-800 border border-slate-600 rounded-xl p-6 max-w-[280px] w-full shadow-2xl transform scale-90 transition-transform duration-300" id="modal-card">
                             <div class="flex justify-between items-start mb-4">
-                                <h3 class="text-lg font-bold text-white">Sync Report</h3>
+                                <h3 class="text-lg font-bold text-white">同步完成</h3>
                                 <button class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
                             </div>
                             <div class="grid grid-cols-3 gap-2 mb-4 text-center">
                                 <div class="bg-slate-700/50 rounded p-2">
-                                    <div class="text-lg font-bold text-green-400">5</div>
-                                    <div class="text-[10px] text-slate-500">New</div>
+                                    <div class="text-base font-bold text-green-400">5</div>
+                                    <div class="text-[10px] text-slate-500">新增</div>
                                 </div>
                                 <div class="bg-slate-700/50 rounded p-2">
-                                    <div class="text-lg font-bold text-slate-400">12</div>
-                                    <div class="text-[10px] text-slate-500">Skipped</div>
+                                    <div class="text-base font-bold text-slate-400">12</div>
+                                    <div class="text-[10px] text-slate-500">跳过</div>
                                 </div>
                                 <div class="bg-slate-700/50 rounded p-2">
-                                    <div class="text-lg font-bold text-red-400">0</div>
-                                    <div class="text-[10px] text-slate-500">Failed</div>
+                                    <div class="text-base font-bold text-red-400">0</div>
+                                    <div class="text-[10px] text-slate-500">失败</div>
                                 </div>
                             </div>
-                            <button onclick="resetDemo()" class="w-full py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs rounded transition-colors">Close</button>
+                            <button onclick="resetDemo()" class="w-full py-2 bg-slate-700 hover:bg-slate-600 text-white text-xs rounded transition-colors">关闭</button>
                         </div>
                     </div>
 
                 </div>
             </div>
+
+            <!-- 手机端重播按钮 -->
+            <div class="p-4 bg-[#0B1120]/80 md:hidden border-t border-slate-700">
+                <button id="replay-btn-mobile" onclick="runSimulation()" class="w-full py-3 border border-slate-700 hover:border-neon-blue/50 bg-slate-800 rounded-lg text-sm font-bold text-slate-300 transition-all flex items-center justify-center gap-2">
+                    <i data-lucide="rotate-cw" class="w-4 h-4"></i>
+                    重新演示
+                </button>
+            </div>
         </div>
     </section>
 
     <!-- 功能详情网格 -->
-    <section id="features" class="py-24 max-w-7xl mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <section id="features" class="py-16 md:py-24 max-w-7xl mx-auto px-4 md:px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             
-            <!-- Feature: 核心技术 -->
-            <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:bg-slate-800/50 transition-colors group">
-                <div class="w-12 h-12 rounded-lg bg-neon-blue/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <i data-lucide="cpu" class="w-6 h-6 text-neon-blue"></i>
+            <!-- Feature 1 -->
+            <div class="p-6 md:p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:bg-slate-800/50 transition-colors group">
+                <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-neon-blue/10 flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="cpu" class="w-5 h-5 md:w-6 md:h-6 text-neon-blue"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3 text-white">PyWebView 驱动</h3>
+                <h3 class="text-lg md:text-xl font-bold mb-3 text-white">轻量极速</h3>
                 <p class="text-slate-400 text-sm leading-relaxed">
-                    告别基于 Electron 的臃肿体积。后端 Python 核心逻辑 + 前端 React 高性能 UI，轻量且强大。支持 <code class="bg-slate-800 px-1 rounded text-neon-blue">headless</code> 无头模式静默运行。
+                    软件体积小，启动快。支持开启“后台运行”模式，让它在后台静默工作，全自动完成所有下载任务，不打扰你的正常学习。
                 </p>
             </div>
 
-            <!-- Feature: 智能筛选 -->
-            <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:bg-slate-800/50 transition-colors group">
-                <div class="w-12 h-12 rounded-lg bg-neon-purple/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <i data-lucide="filter" class="w-6 h-6 text-neon-purple"></i>
+            <!-- Feature 2 -->
+            <div class="p-6 md:p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:bg-slate-800/50 transition-colors group">
+                <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-neon-purple/10 flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="filter" class="w-5 h-5 md:w-6 md:h-6 text-neon-purple"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3 text-white">课程别名 & 筛选</h3>
+                <h3 class="text-lg md:text-xl font-bold mb-3 text-white">个性化整理</h3>
                 <p class="text-slate-400 text-sm leading-relaxed">
-                    "高等数学(B) (001234)" 名字太长？设置别名自动重命名本地文件夹。支持精确到 Tab（如只下载“课件”不下载“作业”）的筛选控制。
+                    课程名字太长？支持自定义重命名，本地文件夹更整洁。只想下载课件不想看作业？支持按分类精准筛选，想下什么你说了算。
                 </p>
             </div>
 
-            <!-- Feature: 安全机制 -->
-            <div class="p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:bg-slate-800/50 transition-colors group">
-                <div class="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                    <i data-lucide="shield-check" class="w-6 h-6 text-green-400"></i>
+            <!-- Feature 3 -->
+            <div class="p-6 md:p-8 rounded-2xl bg-slate-900/50 border border-slate-800 hover:bg-slate-800/50 transition-colors group">
+                <div class="w-10 h-10 md:w-12 md:h-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform">
+                    <i data-lucide="shield-check" class="w-5 h-5 md:w-6 md:h-6 text-green-400"></i>
                 </div>
-                <h3 class="text-xl font-bold mb-3 text-white">隐私优先设计</h3>
+                <h3 class="text-lg md:text-xl font-bold mb-3 text-white">安全隐私</h3>
                 <p class="text-slate-400 text-sm leading-relaxed">
-                    你的账号密码仅保存在本地 <code class="bg-slate-800 px-1 rounded">config.ini</code> 中，绝不上传云端。代码完全开源，逻辑透明可查。
+                    你的账号密码仅保存在你自己的电脑上，绝不上传任何服务器。软件代码完全开源，安全看得见，用得更放心。
                 </p>
             </div>
 
@@ -365,8 +369,8 @@
     </section>
 
     <!-- Footer -->
-    <footer class="border-t border-slate-800 bg-[#050914] py-12 text-center">
-        <p class="text-slate-500 text-sm">
+    <footer class="border-t border-slate-800 bg-[#050914] py-8 md:py-12 text-center px-4">
+        <p class="text-slate-500 text-xs md:text-sm leading-6">
             &copy; 2024 PKU Course Manager. Open Source under MIT License.<br>
             此项目非北京大学官方应用，仅供学习交流使用。
         </p>
@@ -428,6 +432,9 @@
         }
 
         function addLog(msg, color='text-slate-400') {
+            // 手机端不显示日志
+            if (window.innerWidth < 768) return;
+            
             const div = document.createElement('div');
             div.className = `${color} truncate`;
             div.innerText = `> ${msg}`;
@@ -460,7 +467,7 @@
             await wait(500);
 
             elements.btn.login.classList.add('bg-neon-blue', 'text-white');
-            elements.btn.login.innerText = 'AUTHENTICATING...';
+            elements.btn.login.innerText = '身份认证中...';
             
             await wait(1500); // 模拟登录耗时
 
@@ -475,7 +482,7 @@
             // 模拟获取课程列表
             elements.btn.sync.disabled = true;
             elements.btn.sync.classList.add('opacity-50');
-            await wait(1000); // 模拟 Fetch metadata
+            await wait(1000); 
             elements.btn.sync.disabled = false;
             elements.btn.sync.classList.remove('opacity-50');
 
@@ -485,7 +492,7 @@
             elements.btn.sync.classList.add('scale-95');
             setTimeout(() => elements.btn.sync.classList.remove('scale-95'), 150);
             
-            elements.btn.sync.querySelector('span').innerText = 'SYNCING...';
+            elements.btn.sync.querySelector('span').innerText = '正在同步...';
             elements.btn.sync.querySelector('svg').classList.add('animate-spin');
             
             setActiveStep(3);
@@ -493,16 +500,16 @@
             // 打开底部面板和终端
             elements.panel.style.transform = 'translateY(0)';
             elements.terminal.style.opacity = '1';
-            addLog('Initializing Downloader...', 'text-slate-300');
+            addLog('系统初始化...', 'text-slate-300');
             await wait(500);
-            addLog('Loading config from gui.py');
-            addLog('Driver: Chrome Headless', 'text-green-400');
+            addLog('加载配置完成');
+            addLog('后台模式已启动', 'text-green-400');
 
             // 模拟进度
             const courses = [
                 { name: '高等数学 (A)', file: 'lecture_03.pdf', size: '5.2MB' },
                 { name: '计算机系统导论', file: 'lab_manual.docx', size: '1.1MB' },
-                { name: '大学物理', file: 'homework_solution.pdf', size: '0.5MB' }
+                { name: '大学物理', file: 'homework.pdf', size: '0.5MB' }
             ];
 
             let totalProgress = 0;
@@ -516,9 +523,9 @@
                 // 随机更新状态
                 if (i % 15 === 0) {
                     const course = courses[Math.floor(Math.random() * courses.length)];
-                    elements.panelTitle.innerText = `Syncing: ${course.name}`;
-                    elements.panelSub.innerText = `Downloading ${course.file} (${course.size})`;
-                    addLog(`[${course.name}] Fetching ${course.file}...`);
+                    elements.panelTitle.innerText = `同步中: ${course.name}`;
+                    elements.panelSub.innerText = `正在下载 ${course.file} (${course.size})`;
+                    addLog(`[${course.name}] 发现新文件 ${course.file}...`);
                     
                     // 显示课程卡片上的进度条
                     if (course.name.includes('数学')) {
@@ -530,23 +537,23 @@
                 if (i % 25 === 0) {
                     dlCount++;
                     elements.stats.dl.innerText = dlCount;
-                    addLog(`Saved to ./Downloads/${dlCount}.pdf`, 'text-neon-blue');
+                    addLog(`下载完成: ${dlCount}.pdf`, 'text-neon-blue');
                 }
                 if (i % 35 === 0) {
                     skipCount++;
                     elements.stats.skip.innerText = skipCount;
-                    addLog(`File exists, skipped.`, 'text-slate-500');
+                    addLog(`文件已存在，自动跳过`, 'text-slate-500');
                 }
 
                 await wait(80);
             }
 
             elements.progressBar.style.width = '100%';
-            addLog('All tasks finished.', 'text-green-400');
-            elements.btn.sync.querySelector('span').innerText = 'SYNC NOW';
+            addLog('所有任务已完成', 'text-green-400');
+            elements.btn.sync.querySelector('span').innerText = '开始同步';
             elements.btn.sync.querySelector('svg').classList.remove('animate-spin');
-            elements.panelTitle.innerText = 'Complete';
-            elements.panelSub.innerText = 'Sync finished successfully';
+            elements.panelTitle.innerText = '同步完成';
+            elements.panelSub.innerText = '所有文件已是最新';
 
             await wait(1000);
 
@@ -561,7 +568,7 @@
         function resetUI() {
             elements.inputs.user.innerText = '';
             elements.inputs.pass.innerText = '';
-            elements.btn.login.innerText = 'CONNECT TO PORTAL';
+            elements.btn.login.innerText = '连接教学网';
             elements.btn.login.classList.remove('bg-neon-blue', 'text-white');
             elements.views.dashboard.style.opacity = '0';
             elements.panel.style.transform = 'translateY(100%)';
